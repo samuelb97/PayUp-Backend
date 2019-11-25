@@ -1,0 +1,75 @@
+<div id = "linkHandler"></div>
+<script 
+src="https://cdn.plaid.com/link/v2/stable/link-initialize.js">
+</script>
+<script 
+src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+</script>
+<script>
+var _token = '{{token|tojson}}';
+var linkHandler = Plaid.create({
+  selectAccount: true,
+  env: 'development',
+  clientName: 'PayUp',
+  key: '7ea15e63e03666c292fe0815c58488',
+  product: ['auth'],
+  onLoad: function() {
+    // The Link module finished loading.
+    console.log(document)
+  },
+  onSuccess: function(public_token, metadata) {
+    // The onSuccess function is called when the user has successfully
+    // authenticated and selected an account to use.
+    //
+    // When called, you will send the public_token and the selected
+    // account ID, metadata.account_id, to your backend app server.
+    //
+    // sendDataToBackendServer({
+    //   public_token: public_token,
+    //   account_id: metadata.account_id
+    // });
+    const Url = 'http://10.0.0.33:5000/newToken'
+    const data = {
+      "public_token": public_token,
+      "id": metadata.account_id,
+      "type": metadata.institution.name,
+      "mask": metadata.accounts.mask
+    }
+    console.log('JWT TOken: ' + _token.replace(/["]+/g, '') );
+    console.log('Public Token: ' + public_token);
+    console.log('Customer-selected account ID: ' + metadata.account_id);
+    console.log('Institution: ' + metadata.institution.name);
+    $.ajax({
+      url: Url,
+      dataType: 'json',
+      type: 'post',
+      contentType: 'application/json',
+      data: JSON.stringify(data),
+      headers: {
+        "Authorization": "Bearer " + _token.replace(/["]+/g, '')
+      },
+      success: function(data, status, jqxhr){
+        console.log("Success");
+        return self.location = "/bank/" + metadata.institution.name + '/' + metadata.accounts.mask
+      },
+      error: function(jqxher, status, err){
+        console.log("Error");
+        console.log(err);
+        return self.location = "/bankError"
+      }
+    });
+  },
+  onExit: function(err, metadata) {
+    // The user exited the Link flow.
+    if (err != null) {
+      // The user encountered a Plaid API error prior to exiting.
+    }
+    console.log(metadata)
+  },
+});
+
+// Trigger the standard Institution Select view
+linkHandler.open();
+
+
+</script>

@@ -1,0 +1,17 @@
+filename, language, Python, HTML, comment, blank, total
+__init__.py, Python, 52, 0, 28, 22, 102
+crud.py, Python, 47, 0, 18, 24, 89
+firebaseAuth.py, Python, 50, 0, 0, 14, 64
+model_cloudsql.py, Python, 86, 0, 38, 34, 158
+model_datastore.py, Python, 46, 0, 28, 26, 100
+model_mongodb.py, Python, 34, 0, 27, 26, 87
+payments.py, Python, 68, 0, 4, 13, 85
+plaidVerify.py, Python, 111, 0, 11, 27, 149
+templates\base.html, HTML, 0, 40, 0, 1, 41
+templates\error.html, HTML, 0, 50, 1, 4, 55
+templates\form.html, HTML, 0, 40, 0, 10, 50
+templates\list.html, HTML, 0, 45, 0, 7, 52
+templates\plaidLink.ejs, HTML, 0, 72, 0, 3, 75
+templates\success.html, HTML, 0, 50, 1, 4, 55
+templates\view.html, HTML, 0, 42, 0, 7, 49
+Total, -, 494, 339, 156, 222, 1211
